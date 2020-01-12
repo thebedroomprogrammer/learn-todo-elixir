@@ -5,7 +5,7 @@ defmodule TodoServer do
       loop(TodoList.new()) end)
   end
 
-  def add_entry(id,task) do
+  def add(id,task) do
     send(:todo_server, {:add, id, task})
   end
 
@@ -23,7 +23,7 @@ defmodule TodoServer do
   end
 
   def process_message(todo_list,{:add,id,task}) do
-    TodoList.add_entry(todo_list,id,task)
+    TodoList.add(todo_list,id,task)
   end
 
   def process_message(todo_list,{:delete,id}) do
@@ -31,7 +31,7 @@ defmodule TodoServer do
   end
 
   def process_message(todo_list,{:get,id,caller}) do
-    send(caller,{:found_id, TodoList.entries(todo_list,id)})
+    send(caller,{:found_id, TodoList.get(todo_list,id)})
     todo_list
   end
 
@@ -48,11 +48,11 @@ defmodule TodoList do
     %{}
   end
 
-  def add_entry(todo_list,id,task) do
+  def add(todo_list,id,task) do
     Map.update(todo_list, id, [task], fn tasks -> [task | tasks] end)
   end
 
-  def entries(todo_list,id) do
+  def get(todo_list,id) do
     Map.get(todo_list, id, [])
   end
 
