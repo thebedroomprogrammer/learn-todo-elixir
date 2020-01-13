@@ -30,7 +30,7 @@ defmodule TodoServer do
   end
 
   def handle_call({:get, key}, _, state) do
-    {:reply, Map.get(state, key), state}
+    {:reply, TodoList.get(state, key), state}
   end
 end
 
