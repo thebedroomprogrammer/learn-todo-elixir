@@ -14,5 +14,4 @@ defmodule TodoList do
   def delete(todo_list,id) do
     Map.delete(todo_list, id)
   end
-
 end
