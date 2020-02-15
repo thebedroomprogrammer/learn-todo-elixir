@@ -22,14 +22,14 @@ defmodule Todo.Server do
   end
 
   def handle_cast({:add, key, value}, state) do
-    {:noreply, Todo.List.add(state, key, value)}
+    {:noreply, Map.put(state, key, value)}
   end
 
   def handle_cast({:delete, key}, state) do
-    {:noreply, Todo.List.delete(state, key)}
+    {:noreply, Map.delete(state, key)}
   end
 
   def handle_call({:get, key}, _, state) do
-    {:reply, Todo.List.get(state, key), state}
+    {:reply, Map.fetch(state,key), state}
   end
 end
