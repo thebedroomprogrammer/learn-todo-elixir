@@ -1,8 +1,9 @@
 defmodule KeyVal do
   use GenServer
 
-  def start do
-    GenServer.start(__MODULE__,nil,name: __MODULE__)
+  def start_link(_) do
+    IO.puts("Starting gen.")
+    GenServer.start_link(__MODULE__,nil,name: __MODULE__)
   end
 
   def init(_) do
@@ -33,4 +34,7 @@ defmodule KeyVal do
     {:noreply,Map.put(state,key,value)}
   end
 
+  def kill(pid) do
+    Process.exit(pid, :kill)
+  end
 end
